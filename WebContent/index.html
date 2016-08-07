@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<style>
+body {
+background-image:url("lemon.jpg");
+}
+</style>
+<br><br><br><br><br>
+<center>
+<body>
+Enter user-name <input type="text" id="user">
+<br><br>
+Enter password <input type="password" id="pass">
+<br><br>
+<button onclick="myFunction()">Login</button>
+<div id="id1"></div></center>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+function myFunction()
+{
+var user=document.getElementById("user").value;
+var pass=document.getElementById("pass").value;
+var data = {'username':user,'password':pass};
+$.ajax({
+  url: "http://localhost:8080/Login/rest/control/login",
+  type: 'POST',
+  contentType:'application/json ; charset=utf-8',
+  data: JSON.stringify(data),
+  dataType:'json',
+  success: function(data)
+  {
+      var uname=data.username;
+      var uid=data.password;
+      var html="<br>"+uname+"<br>"+uid; 
+      document.getElementById("id1").innerHTML=html;
+  },
+  error: function(xhr, ajaxOptions, thrownError) {
+     //On error do this
+       if (xhr.status == 200) {
+ 
+           alert(ajaxOptions);
+       }
+       else {
+           alert(xhr.status);
+           alert(thrownError);
+       }
+   }
+});
+}
+
+</script>
+</body>
+</html>
